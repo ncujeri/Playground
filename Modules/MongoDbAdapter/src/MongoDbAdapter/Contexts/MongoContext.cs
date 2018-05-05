@@ -28,6 +28,11 @@ namespace MongoDbAdapterModule.Contexts
             await this._collection.InsertOneAsync(entity);
         }
 
+        public async Task AddMany(IEnumerable<T> entities)
+        {
+            await this._collection.InsertManyAsync(entities);
+        }
+
         public async Task DeleteWhere(Expression<Func<T, bool>> where)
         {
             await this._collection.DeleteOneAsync(Builders<T>.Filter.Where(where));            

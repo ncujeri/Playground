@@ -14,16 +14,29 @@ namespace AuthService.Controllers
         private readonly IAuthorizationService _authorizationService;
         private readonly IContextProvider contextProvider;
 
-        public AuthController(IAuthorizationService authorizationService, IContextProvider contextProvider)
+        public AuthController(IAuthorizationService authorizationService)
         {
             this._authorizationService = authorizationService;
-            this.contextProvider = contextProvider;
         }
 
         [HttpPost]
-        public IActionResult LogIn([FromBody]LogInRequest value)
+        public async Task<IActionResult> LogIn([FromBody]LogInRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (request == null) throw new ArgumentNullException();                
+                var result = _authorizationService.LogIn(request);
+                return Ok(await result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest();
+                
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
@@ -32,16 +45,7 @@ namespace AuthService.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            using (var context = contextProvider.GetContext<TstModel>())
-            {
-                var a = await context.GetAll();
-                var b = await context.GetSingle(x => x.Name == "Michael");
-            }
-                return Ok();
-        }
+        
 
     }
 }

@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using AuthService.Configurations;
+using AuthService.FakeDataGeneration;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Database.Common.Configuration;
 using Demos.Common;
@@ -31,6 +33,10 @@ namespace AuthService
             services.Configure<DbConfig>(Configuration.GetSection("DbConfig"));
             services.AddScoped(cfg => cfg.GetService<IOptions<DbConfig>>().Value);
 
+            services.Configure<TokensConfiguration>(Configuration.GetSection("TokensConfiguration"));
+            services.AddScoped(cfg => cfg.GetService<IOptions<TokensConfiguration>>().Value);
+
+            
             var builder = new ContainerBuilder();
 
             builder
@@ -41,6 +47,9 @@ namespace AuthService
 
             var container = builder.Build();
             IoC.InitializeIoC(container);
+
+            //var fakeData = IoC.Resolve<IFakeDataGenerator>();
+            //fakeData.GenerateFakeUsers();
 
             return container.Resolve<IServiceProvider>();
         }

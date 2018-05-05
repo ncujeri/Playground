@@ -16,59 +16,102 @@ namespace AuthService.Tests.ServicesTests
 {
     public class AuthorizationServiceTests
     {
+
         [Fact]
-        public void LogIn_ThrowsArgumentNullException_RequestIsNull()
+        public void LogIn_ThrowsArgumentException_PasswordIsNullOrEmpty()
         {
+            var request1 = new LogInRequest() { Login = "User1", Password = null };
+            var request2 = new LogInRequest() { Login = "User1", Password = string.Empty };
+
             var usersRepositoryMock = new Mock<IUsersRepository>();
             var passwordValidatorMock = new Mock<IPasswordValidator>();
             var tokenServiceMock = new Mock<ITokenService>();
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => authorizationService.LogIn(null));
-            
+
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request1));
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request2));
+            usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Never);
         }
+
         [Fact]
-        public async void LogIn_Invokes_GetUserByLogin()
+        public void LogIn_ThrowsArgumentException_LoginIsNullOrEmpty()
         {
-            
+
+            var request1 = new LogInRequest() { Login = null, Password = "pwd" };
+            var request2 = new LogInRequest() { Login = string.Empty, Password = "pwd2" };
+
+            var usersRepositoryMock = new Mock<IUsersRepository>();
+            var passwordValidatorMock = new Mock<IPasswordValidator>();
+            var tokenServiceMock = new Mock<ITokenService>();
+
+            var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
+
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request1));
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request2));
+            usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Never);
+        }
+
+        [Fact]
+        public  void LogIn_Invokes_GetUserByLogin()
+        {
+
             var usersRepositoryMock = new Mock<IUsersRepository>();
             usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
 
-            var passwordValidatorMock = new Mock<IPasswordValidator>();
-            passwordValidatorMock.Setup(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
-
+            var passwordValidatorMock = new Mock<IPasswordValidator>();     
             var tokenServiceMock = new Mock<ITokenService>();
 
-            var request = new LogInRequest();
+            var request = new LogInRequest() { Login = "User", Password = "pwd" };
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            await authorizationService.LogIn(request);
+            authorizationService.LogIn(request);
 
             usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Once);
         }
 
 
         [Fact]
-        public async void LogIn_InvokesIPasswordValidator_ValidatePassword()
+        public  void LogIn_InvokesIPasswordValidator_ValidatePassword()
         {
 
             var usersRepositoryMock = new Mock<IUsersRepository>();
             usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
 
             var passwordValidatorMock = new Mock<IPasswordValidator>();
-            passwordValidatorMock.Setup(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+            var tokenServiceMock = new Mock<ITokenService>();
+
+            var request = new LogInRequest() { Login = "User", Password = "pwd" };
+
+            var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
+
+            authorizationService.LogIn(request);
+
+            passwordValidatorMock.Verify(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+
+        }
+
+        [Fact]
+        public  void LogIn_ThrowsArgumentException_PasswordValidationFailed()
+        {
+
+            var usersRepositoryMock = new Mock<IUsersRepository>();
+            usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
+
+            var passwordValidatorMock = new Mock<IPasswordValidator>();
+            passwordValidatorMock.Setup(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
 
             var tokenServiceMock = new Mock<ITokenService>();
 
-            var request = new LogInRequest();
+            var request = new LogInRequest() { Login = "User", Password = "pwd" };
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
-            
-            await authorizationService.LogIn(request);
 
-            passwordValidatorMock.Verify(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            authorizationService.LogIn(request);
+
+            Assert.ThrowsAsync<ArgumentException>(()=> authorizationService.LogIn(request));
 
         }
 

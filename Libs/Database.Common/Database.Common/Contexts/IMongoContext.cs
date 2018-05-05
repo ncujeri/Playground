@@ -11,6 +11,7 @@ namespace Database.Common.Contexts
         
     {
         Task Add(T entity);
+        Task AddMany(IEnumerable<T> entities);
         Task DeleteWhere(Expression<Func<T, bool>> where);
         Task<IEnumerable<T>> GetAll();
         Task<T> GetSingle(Expression<Func<T, bool>> where);

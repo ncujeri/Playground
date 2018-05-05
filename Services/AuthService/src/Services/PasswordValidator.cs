@@ -8,10 +8,32 @@ namespace AuthService.Services
 {
     public class PasswordValidator : IPasswordValidator
     {
+        private readonly IPasswordHasher _passwordHasher;
 
+        public PasswordValidator(IPasswordHasher passwordHasher)
+        {
+            this._passwordHasher = passwordHasher;
+        }
         public bool ValidatePassword(string password, string passwordHash, string salt)
         {
-            throw new NotImplementedException();
+            try
+            {
+                byte[] saltBytes = Base64StringToByteArray(salt);
+
+                string hashed = _passwordHasher.HashPassword(password, saltBytes).PasswordHash;
+
+                return hashed == passwordHash;
+            }
+            catch (Exception ex)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
+        private byte[] Base64StringToByteArray(string salt)
+        {
+            return Convert.FromBase64String(salt);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AuthService.Interfaces;
+﻿using AuthService.FakeDataGeneration;
+using AuthService.Interfaces;
 using AuthService.Repositories;
 using AuthService.Services;
 using Autofac;
@@ -31,6 +32,10 @@ namespace AuthService.Bootstrappers
                 .As<IRefreshTokenProvider>();
 
             builder
+                .RegisterType<PasswordHasher>()
+                .As<IPasswordHasher>();
+
+            builder
                 .RegisterType<PasswordValidator>()
                 .As<IPasswordValidator>();
 
@@ -45,6 +50,11 @@ namespace AuthService.Bootstrappers
             builder
                .RegisterType<TokenService>()
                .As<ITokenService>();
+
+            //builder
+            //   .RegisterType<FakeDataGenerator>()
+            //   .As<IFakeDataGenerator>();
+
         }
     }
 }

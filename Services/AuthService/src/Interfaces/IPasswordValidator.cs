@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AuthService.Interfaces
 {
-    public interface IPasswordValidator
+   public interface IPasswordValidator
     {
         bool ValidatePassword(string password, string passwordHash, string salt);
     }

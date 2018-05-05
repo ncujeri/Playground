@@ -1,4 +1,5 @@
-﻿using AuthService.Interfaces;
+﻿using AuthService.Configurations;
+using AuthService.Interfaces;
 using AuthService.Responses;
 using SimpleJwtProvider.Interfaces;
 using SimpleJwtProvider.Models;
@@ -14,20 +15,44 @@ namespace AuthService.Services
         
         private readonly IAccessTokenProvider _accessTokenProvider;
         private readonly IRefreshTokenProvider _refreshTokenProvider;
+        private readonly TokensConfiguration _config;
+        private readonly Dictionary<string, object> _claims;
 
-        public TokenService(IAccessTokenProvider accessTokenProvider, IRefreshTokenProvider refreshTokenProvider)
+        public TokenService(IAccessTokenProvider accessTokenProvider, IRefreshTokenProvider refreshTokenProvider, TokensConfiguration config)
         {
             this._accessTokenProvider = accessTokenProvider;
             this._refreshTokenProvider = refreshTokenProvider;
+            this._config = config;
+            this._claims = ConfigureClaims();
         }
         public Token GetAccessToken(string userRole)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LogInResponse> LogIn(string userRole)
+        public async Task<LogInResponse> LogIn(string userRole)
         {
-            throw new NotImplementedException();
+            var refreshToken = _refreshTokenProvider.GetRefreshToken(DateTime.Now.AddHours(_config.RefreshTokenExpHours));
+            
+            _claims.Add("role", userRole);
+
+            var accesToken = _accessTokenProvider.GetAccessToken(DateTime.Now.AddMinutes(_config.AccessTokenExpMinutes), _claims);
+
+            return new LogInResponse()
+            {
+                AccessToken = accesToken,
+                RefreshToken = await refreshToken
+            };            
+        }
+
+        private Dictionary<string, object> ConfigureClaims()
+        {
+            var claims = new Dictionary<string, object>();
+
+            claims.Add("iss", "DemoAuthorizationService");
+
+            return claims;
+
         }
     }
 }

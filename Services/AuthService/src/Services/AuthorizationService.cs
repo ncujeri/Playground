@@ -14,28 +14,30 @@ namespace AuthService.Services
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IUsersRepository _usersRepository;
-        private readonly IPasswordValidator _passwordManager;
+        private readonly IPasswordValidator _passwordValidator;
         private readonly ITokenService _tokenService;
 
-        public AuthorizationService(IUsersRepository usersRepository, IPasswordValidator passwordManager, ITokenService tokenService)
+        public AuthorizationService(IUsersRepository usersRepository, IPasswordValidator passwordValidator, ITokenService tokenService)
         {
 
             this._usersRepository = usersRepository;
-            this._passwordManager = passwordManager;
+            this._passwordValidator = passwordValidator;
             this._tokenService = tokenService;
         }
         public async Task<LogInResponse> LogIn(LogInRequest request)
         {
-            if (request == null) throw new ArgumentNullException(nameof(LogInRequest));
+            
+            if (string.IsNullOrEmpty(request.Login)) throw new ArgumentException();
+            if (string.IsNullOrEmpty(request.Password)) throw new ArgumentException();
 
             var user = await _usersRepository.GetUserByLogin(request.Login);
 
-            if (_passwordManager.ValidatePassword(request.Password, user.Password, user.Salt))
+            if (_passwordValidator.ValidatePassword(request.Password, user.Password, user.Salt))
             {
                 return await _tokenService.LogIn(user.Role);
             }
 
-            throw new ArgumentException();
+            throw new ArgumentException("Invalid username or password");
 
         }
 

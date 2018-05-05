@@ -25,8 +25,6 @@ namespace AuthService.Tests.ServicesTests
             var usersRepository = new UsersRepository(contextProviderMock.Object);
 
             Assert.ThrowsAsync<ArgumentException>(() => usersRepository.GetUserByLogin(It.IsAny<string>()));
-
-
         }
     }
 }
