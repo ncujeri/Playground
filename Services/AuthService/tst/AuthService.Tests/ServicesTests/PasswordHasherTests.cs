@@ -18,7 +18,7 @@ namespace AuthService.Tests.ServicesTests
             var hash1 = passwordHasher.HashPassword(password);
             var hash2 = passwordHasher.HashPassword(password);
 
-            Assert.NotEqual(hash1, hash2);
+            Assert.NotEqual(hash1.PasswordHash, hash2.PasswordHash);
         }
 
         [Theory]
@@ -35,7 +35,7 @@ namespace AuthService.Tests.ServicesTests
             var hash1 = passwordHasher.HashPassword(password, salt);
             var hash2 = passwordHasher.HashPassword(password, salt);
 
-            Assert.Equal(hash1, hash2);
+            Assert.Equal(hash1.PasswordHash, hash2.PasswordHash);
         }
     }
 }
