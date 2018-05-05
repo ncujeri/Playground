@@ -30,11 +30,13 @@ namespace AuthService.Controllers
             }
             catch (ArgumentException ex)
             {
+                //#TODO log
                 return BadRequest();
                 
             }
             catch (Exception ex)
             {
+                //#TODO log
                 throw;
             }
         }

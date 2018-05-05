@@ -29,7 +29,7 @@ namespace AuthService.Repositories
             }
             catch (Exception ex)
             {
-                //Log exception
+                //#TODO log
                 throw new ArgumentException("User not found");                
             }
             

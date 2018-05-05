@@ -26,7 +26,7 @@ namespace AuthService.Services
             }
             catch (Exception ex)
             {
-                //Log exception
+                //#TODO log
                 throw;
             }
         }
