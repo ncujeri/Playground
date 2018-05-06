@@ -7,6 +7,6 @@ namespace AuthService.Requests
 {
     public class AccessTokenRequest
     {
-        public string Login { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

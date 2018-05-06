@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace AuthService.Interfaces
 {
-    public interface IAuthorizationService
+    public interface IAuthenticationService
     {
         Task<LogInResponse> LogInAsync(LogInRequest request);
-        AccessToken RefreshAccessToken(AccessTokenRequest request);
+        Task<AccessToken> RefreshAccessTokenAsync(AccessTokenRequest request);
     }
 }

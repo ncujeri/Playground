@@ -40,8 +40,8 @@ namespace AuthService.Bootstrappers
                 .As<IPasswordValidator>();
 
             builder
-                .RegisterType<AuthorizationService>()
-                .As<IAuthorizationService>();
+                .RegisterType<AuthenticationService>()
+                .As<IAuthenticationService>();
 
             builder
                 .RegisterType<UsersRepository>()
@@ -50,6 +50,15 @@ namespace AuthService.Bootstrappers
             builder
                .RegisterType<TokenService>()
                .As<ITokenService>();
+
+            builder
+               .RegisterType<TokensRepository>()
+               .As<ITokensRepository>();
+
+            builder
+               .RegisterType<RedisProvider>()
+               .As<IRedisProvider>()
+               .SingleInstance();            
 
             //builder
             //   .RegisterType<FakeDataGenerator>()

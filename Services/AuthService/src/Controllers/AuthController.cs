@@ -11,10 +11,10 @@ namespace AuthService.Controllers
     [Route("api/[controller]/[action]")]
     public class AuthController : Controller
     {
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IAuthenticationService _authorizationService;
         private readonly IContextProvider contextProvider;
 
-        public AuthController(IAuthorizationService authorizationService)
+        public AuthController(IAuthenticationService authorizationService)
         {
             this._authorizationService = authorizationService;
         }
@@ -42,9 +42,25 @@ namespace AuthService.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetAccessToken([FromBody]AccessTokenRequest value)
+        public async Task<IActionResult> GetAccessToken([FromBody]AccessTokenRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (request == null) throw new ArgumentNullException();
+                var result = _authorizationService.RefreshAccessTokenAsync(request);
+                return Ok(await result);
+            }
+            catch (ArgumentException ex)
+            {
+                //#TODO log
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                //#TODO log
+                throw;
+            }
         }
 
         

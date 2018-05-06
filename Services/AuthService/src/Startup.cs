@@ -33,6 +33,9 @@ namespace AuthService
             services.Configure<DbConfig>(Configuration.GetSection("DbConfig"));
             services.AddScoped(cfg => cfg.GetService<IOptions<DbConfig>>().Value);
 
+            services.Configure<RedisConfiguration>(Configuration.GetSection("RedisConfiguration"));
+            services.AddScoped(cfg => cfg.GetService<IOptions<RedisConfiguration>>().Value);
+            
             services.Configure<TokensConfiguration>(Configuration.GetSection("TokensConfiguration"));
             services.AddScoped(cfg => cfg.GetService<IOptions<TokensConfiguration>>().Value);
 

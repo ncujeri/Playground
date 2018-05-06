@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 
 namespace AuthService.Services
 {
-    public class AuthorizationService : IAuthorizationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IPasswordValidator _passwordValidator;
         private readonly ITokenService _tokenService;
 
-        public AuthorizationService(IUsersRepository usersRepository, IPasswordValidator passwordValidator, ITokenService tokenService)
+        public AuthenticationService(IUsersRepository usersRepository, 
+            IPasswordValidator passwordValidator,
+            ITokenService tokenService)
         {
-
             this._usersRepository = usersRepository;
             this._passwordValidator = passwordValidator;
             this._tokenService = tokenService;
@@ -41,9 +42,9 @@ namespace AuthService.Services
 
         }
 
-        public AccessToken RefreshAccessToken(AccessTokenRequest request)
+        public async Task<AccessToken> RefreshAccessTokenAsync(AccessTokenRequest request)
         {
-            throw new NotImplementedException();
+            return await _tokenService.GetAccessTokenAsync(request);
         }
     }
 }
