@@ -24,17 +24,17 @@ namespace AuthService.Services
             this._passwordValidator = passwordValidator;
             this._tokenService = tokenService;
         }
-        public async Task<LogInResponse> LogIn(LogInRequest request)
+        public async Task<LogInResponse> LogInAsync(LogInRequest request)
         {
             
             if (string.IsNullOrEmpty(request.Login)) throw new ArgumentException();
             if (string.IsNullOrEmpty(request.Password)) throw new ArgumentException();
 
-            var user = await _usersRepository.GetUserByLogin(request.Login);
+            var user = await _usersRepository.GetUserByLoginAsync(request.Login);
 
             if (_passwordValidator.ValidatePassword(request.Password, user.Password, user.Salt))
             {
-                return await _tokenService.LogIn(user.Role);
+                return await _tokenService.LogInAsync(user.Role);
             }
 
             throw new ArgumentException("Invalid username or password");

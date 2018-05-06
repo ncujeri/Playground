@@ -30,7 +30,7 @@ namespace AuthService.Services
             throw new NotImplementedException();
         }
 
-        public async Task<LogInResponse> LogIn(string userRole)
+        public async Task<LogInResponse> LogInAsync(string userRole)
         {
             var refreshToken = _refreshTokenProvider.GetRefreshToken(DateTime.Now.AddHours(_config.RefreshTokenExpHours));
             

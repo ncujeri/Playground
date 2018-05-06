@@ -23,7 +23,7 @@ namespace AuthService.FakeDataGeneration
         {
             using (var context = _provider.GetContext<UserModel>())
             {
-                context.AddMany(GetUsers());
+                context.AddManyAsync(GetUsers());
             }
         }
 

@@ -25,7 +25,7 @@ namespace AuthService.Controllers
             try
             {
                 if (request == null) throw new ArgumentNullException();                
-                var result = _authorizationService.LogIn(request);
+                var result = _authorizationService.LogInAsync(request);
                 return Ok(await result);
             }
             catch (ArgumentException ex)

@@ -23,34 +23,34 @@ namespace MongoDbAdapterModule.Contexts
             this._collection = client.GetDatabase(_config.DbName).GetCollection<T>(typeof(T).Name);
         }
         
-        public async Task Add(T entity)
+        public async Task AddAsync(T entity)
         {            
             await this._collection.InsertOneAsync(entity);
         }
 
-        public async Task AddMany(IEnumerable<T> entities)
+        public async Task AddManyAsync(IEnumerable<T> entities)
         {
             await this._collection.InsertManyAsync(entities);
         }
 
-        public async Task DeleteWhere(Expression<Func<T, bool>> where)
+        public async Task DeleteWhereAsync(Expression<Func<T, bool>> where)
         {
             await this._collection.DeleteOneAsync(Builders<T>.Filter.Where(where));            
         }        
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             var result = await _collection.FindAsync(x => true);
             return await result.ToListAsync();
         }
 
-        public async Task<T> GetSingle(Expression<Func<T, bool>> where)
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> where)
         {
             var result = await this._collection.FindAsync(where);
              return result.First();
         }
 
-        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> where)
+        public async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> where)
         {
             var result = await this._collection.FindAsync(where);
             return await result.ToListAsync();

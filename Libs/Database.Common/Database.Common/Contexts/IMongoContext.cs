@@ -10,11 +10,11 @@ namespace Database.Common.Contexts
     public interface IMongoContext<T> : IDisposable
         
     {
-        Task Add(T entity);
-        Task AddMany(IEnumerable<T> entities);
-        Task DeleteWhere(Expression<Func<T, bool>> where);
-        Task<IEnumerable<T>> GetAll();
-        Task<T> GetSingle(Expression<Func<T, bool>> where);
-        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> where);
+        Task AddAsync(T entity);
+        Task AddManyAsync(IEnumerable<T> entities);
+        Task DeleteWhereAsync(Expression<Func<T, bool>> where);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> where);
+        Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> where);
     }
 }

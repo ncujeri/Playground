@@ -25,7 +25,7 @@ namespace AuthService.Tests.ServicesTests
 
             var tokenService = new TokenService(accessTokenProviderMock.Object, refreshTokenProviderMock.Object, configMock.Object);
 
-            var result = tokenService.LogIn(It.IsAny<string>());
+            var result = tokenService.LogInAsync(It.IsAny<string>());
 
             Assert.NotNull(result.Result.AccessToken);
         }
@@ -42,7 +42,7 @@ namespace AuthService.Tests.ServicesTests
 
             var tokenService = new TokenService(accessTokenProviderMock.Object, refreshTokenProviderMock.Object, configMock.Object);
 
-            var result = tokenService.LogIn(It.IsAny<string>());
+            var result = tokenService.LogInAsync(It.IsAny<string>());
 
             Assert.NotNull(result.Result.RefreshToken);
         }

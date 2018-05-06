@@ -8,6 +8,6 @@ namespace AuthService.Interfaces
 {
     public interface IUsersRepository
     {
-         Task<UserModel> GetUserByLogin(string login);
+         Task<UserModel> GetUserByLoginAsync(string login);
     }
 }

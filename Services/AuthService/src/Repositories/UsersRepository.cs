@@ -18,13 +18,13 @@ namespace AuthService.Repositories
         }
         
 
-        public async Task<UserModel> GetUserByLogin(string login)
+        public async Task<UserModel> GetUserByLoginAsync(string login)
         {
             try
             {
                 using (var context = _contextProvider.GetContext<UserModel>())
                 {
-                    return await context.GetSingle(x => x.UserLogin == login);
+                    return await context.GetSingleAsync(x => x.UserLogin == login);
                 }
             }
             catch (Exception ex)

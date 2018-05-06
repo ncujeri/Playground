@@ -26,7 +26,7 @@ namespace AuthService.Controllers
             IEnumerable<TstModel> result;
             using (var context = _contextProvider.GetContext<TstModel>())
             {
-                 result = await context.GetAll();                
+                 result = await context.GetAllAsync();                
             }
             return Ok(result);
         }

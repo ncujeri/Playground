@@ -18,13 +18,13 @@ namespace AuthService.Tests.ServicesTests
         public void GetUserByLogin_ThrowsArgumentException_UserNotFound()
         {
             var contextMock = new Mock<IMongoContext<BaseModel>>();
-            contextMock.Setup(x => x.GetSingle(It.IsAny<Expression<Func<BaseModel, bool>>>())).Throws(new Exception());
+            contextMock.Setup(x => x.GetSingleAsync(It.IsAny<Expression<Func<BaseModel, bool>>>())).Throws(new Exception());
             var contextProviderMock = new Mock<IContextProvider>();
             contextProviderMock.Setup(x => x.GetContext<BaseModel>()).Returns(contextMock.Object);
 
             var usersRepository = new UsersRepository(contextProviderMock.Object);
 
-            Assert.ThrowsAsync<ArgumentException>(() => usersRepository.GetUserByLogin(It.IsAny<string>()));
+            Assert.ThrowsAsync<ArgumentException>(() => usersRepository.GetUserByLoginAsync(It.IsAny<string>()));
         }
     }
 }

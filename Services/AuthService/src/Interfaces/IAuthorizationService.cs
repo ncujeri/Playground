@@ -10,7 +10,7 @@ namespace AuthService.Interfaces
 {
     public interface IAuthorizationService
     {
-        Task<LogInResponse> LogIn(LogInRequest request);
+        Task<LogInResponse> LogInAsync(LogInRequest request);
         AccessToken RefreshAccessToken(AccessTokenRequest request);
     }
 }

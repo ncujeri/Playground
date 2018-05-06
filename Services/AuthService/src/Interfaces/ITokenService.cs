@@ -10,6 +10,6 @@ namespace AuthService.Interfaces
     public interface ITokenService
     {
         Token GetAccessToken(string userRole);
-        Task<LogInResponse> LogIn(string userRole);
+        Task<LogInResponse> LogInAsync(string userRole);
     }
 }

@@ -30,9 +30,9 @@ namespace AuthService.Tests.ServicesTests
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
 
-            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request1));
-            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request2));
-            usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Never);
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogInAsync(request1));
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogInAsync(request2));
+            usersRepositoryMock.Verify(x => x.GetUserByLoginAsync(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
@@ -48,9 +48,9 @@ namespace AuthService.Tests.ServicesTests
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request1));
-            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogIn(request2));
-            usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Never);
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogInAsync(request1));
+            Assert.ThrowsAsync<ArgumentException>(() => authorizationService.LogInAsync(request2));
+            usersRepositoryMock.Verify(x => x.GetUserByLoginAsync(It.IsAny<string>()), Times.Never);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace AuthService.Tests.ServicesTests
         {
 
             var usersRepositoryMock = new Mock<IUsersRepository>();
-            usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
+            usersRepositoryMock.Setup(x => x.GetUserByLoginAsync(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
 
             var passwordValidatorMock = new Mock<IPasswordValidator>();     
             var tokenServiceMock = new Mock<ITokenService>();
@@ -67,9 +67,9 @@ namespace AuthService.Tests.ServicesTests
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            authorizationService.LogIn(request);
+            authorizationService.LogInAsync(request);
 
-            usersRepositoryMock.Verify(x => x.GetUserByLogin(It.IsAny<string>()), Times.Once);
+            usersRepositoryMock.Verify(x => x.GetUserByLoginAsync(It.IsAny<string>()), Times.Once);
         }
 
 
@@ -78,7 +78,7 @@ namespace AuthService.Tests.ServicesTests
         {
 
             var usersRepositoryMock = new Mock<IUsersRepository>();
-            usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
+            usersRepositoryMock.Setup(x => x.GetUserByLoginAsync(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
 
             var passwordValidatorMock = new Mock<IPasswordValidator>();
             var tokenServiceMock = new Mock<ITokenService>();
@@ -87,7 +87,7 @@ namespace AuthService.Tests.ServicesTests
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            authorizationService.LogIn(request);
+            authorizationService.LogInAsync(request);
 
             passwordValidatorMock.Verify(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 
@@ -98,7 +98,7 @@ namespace AuthService.Tests.ServicesTests
         {
 
             var usersRepositoryMock = new Mock<IUsersRepository>();
-            usersRepositoryMock.Setup(x => x.GetUserByLogin(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
+            usersRepositoryMock.Setup(x => x.GetUserByLoginAsync(It.IsAny<string>())).Returns(Task.FromResult(new UserModel()));
 
             var passwordValidatorMock = new Mock<IPasswordValidator>();
             passwordValidatorMock.Setup(x => x.ValidatePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
@@ -109,9 +109,9 @@ namespace AuthService.Tests.ServicesTests
 
             var authorizationService = new AuthorizationService(usersRepositoryMock.Object, passwordValidatorMock.Object, tokenServiceMock.Object);
 
-            authorizationService.LogIn(request);
+            authorizationService.LogInAsync(request);
 
-            Assert.ThrowsAsync<ArgumentException>(()=> authorizationService.LogIn(request));
+            Assert.ThrowsAsync<ArgumentException>(()=> authorizationService.LogInAsync(request));
 
         }
 
