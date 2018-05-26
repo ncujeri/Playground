@@ -13,7 +13,7 @@ namespace AuthService.Services
 {
     public class TokenService : ITokenService
     {
-        
+
         private readonly IAccessTokenProvider _accessTokenProvider;
         private readonly IRefreshTokenProvider _refreshTokenProvider;
         private readonly ITokensRepository _tokensRepository;
@@ -34,21 +34,22 @@ namespace AuthService.Services
         public async Task<AccessToken> GetAccessTokenAsync(AccessTokenRequest request)
         {
             //TODO Implement methods for token validation and getting role - introduce SINGLE RESPONSIBILITY
-            var hashEntries = await _tokensRepository.GetTokenAsync(request.RefreshToken);
-            if (hashEntries.First(x=>x.Name == "Revoked").Value == false)
-            {
-                var role = hashEntries.First(x => x.Name == "Role").Value.ToString();
-                _claims.Add("role", role);
-                var result = _accessTokenProvider.GetAccessToken(DateTime.Now.AddMinutes(_config.AccessTokenExpMinutes), _claims);
-                return result;
-            }
-            throw new ArgumentException(nameof(request.RefreshToken));
+            var userRole = await _tokensRepository.GetTokenAsync(request.RefreshToken);
+
+            if (userRole.IsNullOrEmpty) throw new ArgumentException(nameof(request.RefreshToken));
+
+
+            _claims.Add("role", userRole.ToString());
+            var result = _accessTokenProvider.GetAccessToken(DateTime.Now.AddHours(_config.AccessTokenExpMinutes), _claims);
+            return result;
+
+
         }
 
         public async Task<LogInResponse> LogInAsync(string userRole)
         {
-            var refreshToken = _refreshTokenProvider.GetRefreshToken(DateTime.Now.AddHours(_config.RefreshTokenExpHours));
-            
+            var refreshToken = _refreshTokenProvider.GetRefreshToken(DateTime.Now.AddMinutes(_config.RefreshTokenExpHours));
+
             _claims.Add("role", userRole);
 
             var accessToken = _accessTokenProvider.GetAccessToken(DateTime.Now.AddMinutes(_config.AccessTokenExpMinutes), _claims);
@@ -60,7 +61,7 @@ namespace AuthService.Services
             {
                 AccessToken = accessToken,
                 RefreshToken = await refreshToken
-            };            
+            };
         }
 
         private Dictionary<string, object> ConfigureClaims()

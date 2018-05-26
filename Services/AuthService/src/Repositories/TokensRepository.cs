@@ -19,21 +19,17 @@ namespace AuthService.Repositories
         public async Task AddTokenAsync(RefreshToken token, string role)
         {
             var db = _redisProvider.GetMultiplexer().GetDatabase();
+            var ticksToExpire = (token.ExpirationDate - DateTime.Now).Ticks;
+            await db.StringSetAsync(token.TokenValue, role, new TimeSpan(ticksToExpire));
 
-            var entries = new HashEntry[] {
-            new HashEntry("Revoked", token.Revoked),
-            new HashEntry("Role", role),
-            new HashEntry("Expires", token.ExpirationDate.ToString())};
-
-            await db.HashSetAsync(token.TokenValue, entries);            
         }
 
-        public async Task<HashEntry[]> GetTokenAsync(string tokenValue)
+        public async Task<RedisValue> GetTokenAsync(string tokenValue)
         {
             var db = _redisProvider.GetMultiplexer().GetDatabase();
 
-           return await db.HashGetAllAsync(tokenValue);
-            
+            return await db.StringGetAsync(tokenValue);            
+
         }
     }
 }

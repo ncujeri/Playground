@@ -10,7 +10,7 @@ namespace AuthService.Interfaces
 {
     public interface ITokensRepository
     {
-        Task<HashEntry[]> GetTokenAsync(string tokenValue);
+        Task<RedisValue> GetTokenAsync(string tokenValue);
         Task AddTokenAsync(RefreshToken token, string role);
     }
 }
