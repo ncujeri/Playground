@@ -5,12 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libs\PasswordHasher\PasswordHasher\PasswordHasher.csproj" />
   </ItemGroup>
 
 </Project>

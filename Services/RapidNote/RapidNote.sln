@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidNote", "RapidNote\RapidNote.csproj", "{A31B9C0C-EBFD-4E67-AB2C-50D551144931}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{F95B844D-0127-4DF8-9E11-E79C060E8DB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordHasher", "..\..\Libs\PasswordHasher\PasswordHasher\PasswordHasher.csproj", "{047D4159-7777-4A87-B276-740C37BB789F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{A31B9C0C-EBFD-4E67-AB2C-50D551144931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31B9C0C-EBFD-4E67-AB2C-50D551144931}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31B9C0C-EBFD-4E67-AB2C-50D551144931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047D4159-7777-4A87-B276-740C37BB789F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047D4159-7777-4A87-B276-740C37BB789F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047D4159-7777-4A87-B276-740C37BB789F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047D4159-7777-4A87-B276-740C37BB789F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{047D4159-7777-4A87-B276-740C37BB789F} = {F95B844D-0127-4DF8-9E11-E79C060E8DB3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60FF1485-16BC-4748-8D6E-DF06428BCB25}
