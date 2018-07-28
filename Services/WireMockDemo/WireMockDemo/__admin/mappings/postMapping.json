@@ -22,6 +22,6 @@
     },
     "Response": {
         "StatusCode": 200,
-        "Body": "{ \"result\": \"MockPostIsWorking!\" }"
+        "Body": "{ \"result\": \"My post method mock is working!\" }"
     }
 }

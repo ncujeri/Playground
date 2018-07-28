@@ -16,6 +16,6 @@
     },
     "Response": {
         "StatusCode": 200,
-        "Body": "{ \"result\": \"MockGetIsWorking!\" }"    
+        "Body": "{ \"result\": \"My get method mock is working!\" }"    
     }
 }
