@@ -23,8 +23,6 @@ namespace RapidNote.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var command = new RegisterUserCommand();
-            _mediator.Send(command);
             return new string[] { "value1", "value2" };
         }
 

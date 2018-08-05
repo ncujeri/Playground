@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 using RapidNote.Commands;
 
-namespace RapidNote.Handlers
+namespace RapidNote.Modules.NotesModule.CommandHandlers
 {
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand>
+    public class AddNoteCommandHandler : AsyncRequestHandler<AddNoteCommand>
     {
-        public Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        protected override Task Handle(AddNoteCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
