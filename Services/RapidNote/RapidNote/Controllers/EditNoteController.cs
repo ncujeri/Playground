@@ -1,26 +1,24 @@
 ﻿using System;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RapidNote.Commands;
 
 namespace RapidNote.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddNoteController : Controller
+    public class EditNoteController : Controller
     {
         private readonly IMediator _mediator;
 
-        public AddNoteController(IMediator mediator)
+        public EditNoteController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPut]
-        public IActionResult AddNote([FromBody] AddNoteCommand command)
+        [HttpPost]
+        public IActionResult EditNote()
         {
             throw new NotImplementedException();
         }
-
     }
 }

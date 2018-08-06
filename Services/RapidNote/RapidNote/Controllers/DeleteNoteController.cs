@@ -5,7 +5,7 @@ using RapidNote.Commands;
 
 namespace RapidNote.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class DeleteNoteController : Controller
     {
@@ -16,7 +16,7 @@ namespace RapidNote.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut]
+        [HttpDelete]
         public IActionResult DeleteNote([FromBody] DeleteNoteCommand command)
         {
             throw new NotImplementedException();
