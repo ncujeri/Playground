@@ -16,7 +16,7 @@ namespace RedisPlayground.Services
         {
             if (_redisMultiplexer == null)
             {
-                _redisMultiplexer = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+                _redisMultiplexer = ConnectionMultiplexer.Connect("127.0.0.1:6736");
             }
 
             return _redisMultiplexer.GetDatabase();
