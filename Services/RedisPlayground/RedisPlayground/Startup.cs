@@ -29,7 +29,7 @@ namespace RedisPlayground
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDistributedRedisCache(options => { options.Configuration = "127.0.0.1:6379"; });
-            services.AddScoped<IRedisDatabaseProvider, RedisDatabaseProvider>();
+            services.AddSingleton<IRedisDatabaseProvider, RedisDatabaseProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
