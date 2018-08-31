@@ -23,7 +23,7 @@ namespace RedisPlayground.Controllers
         public IActionResult IncrementEntry([FromBody] CacheEntry entry)
         {
             var db = _redisDatabaseProvider.GetDatabase();
-            var value = db.StringGet(entry.Key);
+            var value = int.Parse(db.StringGet(entry.Key));
             value = value + 1;
             db.StringSet(entry.Key, value);
             return Ok();
